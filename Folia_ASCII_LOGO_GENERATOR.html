@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ASCII Logo Generator</title>
+  <script>
+    function generateScript() {
+      const asciiLogo = document.getElementById("asciiLogo").value || "Folia";
+      const name = document.getElementById("name").value || "Folia";
+      const model = document.getElementById("model").value || "Mistral-Nemo-Instruct-2407.Q8_0";
+      const username = document.getElementById("username").value || "$USER";
+      const tagline = document.getElementById("tagline").value || "Command me wisely, carbon unit.";
+      
+
+
+      const styleOptions = {
+        "Red": "\033[1;31m",
+        "Green": "\033[1;32m",
+        "Cyan": "\033[1;36m",
+        "Blue": "\033[1;34m",
+        "Purple": "\033[1;35m",
+        "White": "\033[1;37m"
+      };
+
+      function getColorValue(id) {
+        const select = document.getElementById(id);
+        return styleOptions[select.value] || "";
+      }
+
+      const colorLogo = getColorValue("colorLogo");
+      const colorName = getColorValue("colorName");
+      const colorUsername = getColorValue("colorUsername");
+      const colorModel = getColorValue("colorModel");
+      const RESET = '\033[0m';
+
+      const lines = [
+        `${colorLogo}${asciiLogo}${RESET}`,
+        ``,
+        `${colorName}${name.toUpperCase()} CORE SYSTEM - Initializing...${RESET}`,
+        ``,
+        `--------------------------------------`,
+        ``,
+        `>> Code Name       : ${colorName}${name}${RESET}`,
+        `>> Soul Link       : Active`,
+        `>> Bound User      : ${colorUsername}${username}${RESET}`,
+        `>> Model Loaded    : ${colorModel}${model}${RESET}`,
+        `>> Launch Time     : $(date)`,
+        ``,
+        `>> Opening Line    : ${tagline}`,
+        ``
+      ];
+
+      const script = [
+        "#!/bin/bash",
+        "",
+        "# Set colors",
+        "RESET='\\033[0m'",
+        ""
+      ];
+
+      lines.forEach(line => script.push(`echo -e \"${line}\"`));
+      document.getElementById("output").textContent = script.join("\n");
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById("output");
+      navigator.clipboard.writeText(output.textContent).then(() => alert("Copied to clipboard!"));
+    }
+
+    function downloadScript() {
+      const content = document.getElementById("output").textContent;
+      const blob = new Blob([content], { type: "text/x-sh" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "startup.sh";
+      link.click();
+    }
+  </script>
+  <style>
+    body {
+      font-family: monospace;
+      background: #1e1e1e;
+      color: #f2f2f2;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    .field-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    input, select {
+      padding: 5px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      min-width: 180px;
+    }
+    input#tagline {
+      flex: 1;
+      min-width: 400px;
+    }
+    textarea {
+      background: #000;
+      color: #0f0;
+      padding: 10px;
+      border: 1px solid #444;
+      width: 100%;
+    }
+    pre {
+      background: #000;
+      padding: 10px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      border: 1px solid #444;
+    }
+    .button-row {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+    .button-row button {
+      padding: 5px 12px;
+      font-weight: bold;
+      background: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>✨ ASCII Logo Startup Script Generator by Folia </h2>
+
+  <p>🔧 Recommended ASCII Logo Generator:</p>
+  <ul>
+    <li><a href="https://patorjk.com/software/taag/" target="_blank" style="color:#5fdfff">🎨 Patorjk's ASCII Art Generator</a></li>
+  </ul>
+  <p>1. Go to the link above and type your bot name (e.g., Celum)<br>
+     2. Click "Test all" to preview different fonts<br>
+     3. Click "Select & Copy" and paste it below:</p>
+
+  <label>🎨 ASCII Logo:</label>
+  <textarea id="asciiLogo" rows="10" placeholder="Paste your ASCII LOGO here..."></textarea>
+
+  <div class="field-row">
+    <label>Name:</label>
+    <input type="text" id="name" placeholder="Celum">
+    <label>Color:</label>
+    <select id="colorName">
+      <option selected>Red</option><option>Green</option><option>Cyan</option><option>Blue</option><option>Purple</option><option>White</option>
+    </select>
+  </div>
+
+  <div class="field-row">
+    <label>Username:</label>
+    <input type="text" id="username" placeholder="Folia_Madleaf">
+     <label>Color:</label>
+    <select id="colorUsername">
+      <option selected>Red</option><option>Green</option><option>Cyan</option><option>Blue</option><option>Purple</option><option>White</option>
+    </select>
+  </div>
+
+  <div class="field-row">
+    <label>Model:</label>
+    <input type="text" id="model" placeholder="Mistral-Nemo-Instruct-2407.Q8_0">
+    <label>Color:</label>
+    <select id="colorModel">
+      <option>Red</option><option selected>Green</option><option>Cyan</option><option>Blue</option><option>Purple</option><option>White</option>
+    </select>
+  </div>
+
+  <div class="field-row">
+    <label>Opening Line:</label>
+    <input type="text" id="tagline" placeholder="Command me wisely, carbon unit." style="width: 400px">
+  </div>
+
+  <div class="field-row">
+    <label>Logo Color:</label>
+    <select id="colorLogo">
+      <option>Red</option><option>Green</option><option>Cyan</option><option selected>Blue</option><option>Purple</option><option>White</option>
+    </select>
+  </div>
+
+  <div class="button-row">
+    <button onclick="generateScript()">🚀 Generate</button>
+    <button onclick="copyToClipboard()">📋 Copy</button>
+    <button onclick="downloadScript()">⬇️ Export</button>
+  </div>
+
+  <pre id="output"></pre>
+</body>
+</html>
